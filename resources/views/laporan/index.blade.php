@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-Income Report {{ tanggal_indonesia($tanggalAwal, false) }} -- {{ tanggal_indonesia($tanggalAkhir, false) }}
+Report Pendapatan {{ tanggal_indonesia($tanggalAwal, false) }} -- {{ tanggal_indonesia($tanggalAkhir, false) }}
 @endsection
 
 @push('css')

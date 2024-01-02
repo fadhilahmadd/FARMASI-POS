@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-Purchase
+Pembelian
 @endsection
 
 @push('css')
