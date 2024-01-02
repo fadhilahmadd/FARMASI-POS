@@ -87,7 +87,7 @@ List Members
 
     function addForm(url) {
         $('#modal-form').modal('show');
-        $('#modal-form .modal-title').text('Add Member');
+        $('#modal-form .modal-title').text('Tambah Member');
 
         $('#modal-form form')[0].reset();
         $('#modal-form form').attr('action', url);
@@ -111,13 +111,13 @@ List Members
                 $('#modal-form [name=alamat]').val(response.alamat);
             })
             .fail((errors) => {
-                alert('Unable to display data');
+                alert('Tidak dapat menampilkan data');
                 return;
             });
     }
 
     function deleteData(url) {
-        if (confirm('Are you sure you want to delete selected data?')) {
+        if (confirm('Apakah anda yakin menghapus data yang dipilih?')) {
             $.post(url, {
                     '_token': $('[name=csrf-token]').attr('content'),
                     '_method': 'delete'
@@ -134,7 +134,7 @@ List Members
 
     function cetakMember(url) {
         if ($('input:checked').length < 1) {
-            alert('Select the data to print');
+            alert('Pilih data untuk print');
             return;
         } else {
             $('.form-member')
