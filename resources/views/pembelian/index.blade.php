@@ -94,19 +94,30 @@
     }
 
     function deleteData(url) {
-        if (confirm('Are you sure you want to delete selected data?')) {
-            $.post(url, {
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            text: 'Anda tidak bisa membatalkan lagi setelah konfirmasi!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Hapus'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.post(url, {
                     '_token': $('[name=csrf-token]').attr('content'),
                     '_method': 'delete'
                 })
                 .done((response) => {
                     table.ajax.reload();
+                    Swal.fire('Deleted!', 'Data anda berhasil dihapus.', 'success');
                 })
                 .fail((errors) => {
-                    alert('Tidak dapat menghapus data');
+                    Swal.fire('Error!', 'Unable to delete data', 'error');
                     return;
                 });
-        }
+            }
+        });
     }
 </script>
 @endpush

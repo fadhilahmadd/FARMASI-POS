@@ -62,7 +62,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="diskon" class="col-lg-2 control-label">Diskon</label>
+                        <label for="diskon" class="col-lg-2 control-label">Diskon (%)</label>
                         <div class="col-lg-2">
                             <input type="number" name="diskon" class="form-control" id="diskon" required>
                             <span class="help-block with-errors"></span>

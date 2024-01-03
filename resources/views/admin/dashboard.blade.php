@@ -80,7 +80,7 @@
         <!-- small box -->
         <div class="small-box bg-green">
             <div class="inner">
-                <h3>{{ $penjualan }}</h3>
+                <h3>Rp {{ number_format($penjualan, 0, ',', '.') }}</h3>
 
                 <p>Penjualan</p>
             </div>
@@ -96,7 +96,7 @@
         <!-- small box -->
         <div class="small-box bg-red">
             <div class="inner">
-                <h3>{{ $pengeluaran }}</h3>
+                <h3>Rp {{ number_format($pengeluaran, 0, ',', '.') }}</h3>
 
                 <p>Total Pengeluaran</p>
             </div>
@@ -112,7 +112,7 @@
         <!-- small box -->
         <div class="small-box bg-green">
             <div class="inner">
-                <h3>{{ $pembelian }}</h3>
+                <h3>Rp {{ number_format($pembelian, 0, ',', '.') }}</h3>
 
                 <p>Total Pembelian</p>
             </div>

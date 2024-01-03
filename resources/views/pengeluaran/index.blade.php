@@ -64,7 +64,7 @@
                         table.ajax.reload();
                     })
                     .fail((errors) => {
-                        alert('Tidak dapat menyimpan data');
+                        Swal.fire('Error!', 'Unable to save data', 'error');
                         return;
                     });
             }
@@ -96,25 +96,36 @@
                 $('#modal-form [name=nominal]').val(response.nominal);
             })
             .fail((errors) => {
-                alert('Tidak dapat menampilkan data');
+                Swal.fire('Error!', 'Unable to retrieve data', 'error');
                 return;
             });
     }
 
     function deleteData(url) {
-        if (confirm('Are you sure you want to delete selected data?')) {
-            $.post(url, {
+        Swal.fire({
+            title: 'Apa anda yakin?',
+            text: 'Anda tidak bisa membatalkan lagi setelah konfirmasi!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Hapus'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.post(url, {
                     '_token': $('[name=csrf-token]').attr('content'),
                     '_method': 'delete'
                 })
                 .done((response) => {
                     table.ajax.reload();
+                    Swal.fire('Deleted!', 'Data telah dihapus.', 'success');
                 })
                 .fail((errors) => {
-                    alert('Tidak dapat menyimpan data');
+                    Swal.fire('Error!', 'Tidak dapat menghapus data', 'error');
                     return;
                 });
-        }
+            }
+        });
     }
 </script>
 @endpush

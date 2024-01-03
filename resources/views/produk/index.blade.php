@@ -35,7 +35,7 @@
                             <th>Brand</th>
                             <th>Harga Beli</th>
                             <th>Harga Jual</th>
-                            <th>Diskon</th>
+                            <th>Diskon (%)</th>
                             <th>Stok</th>
                             <th width="15%"><i class="fa fa-cog"></i></th>
                         </thead>
@@ -85,7 +85,7 @@
                         table.ajax.reload();
                     })
                     .fail((errors) => {
-                        alert('Tidak dapat menyimpan data');
+                        Swal.fire('Error!', 'Unable to save data', 'error');
                         return;
                     });
             }
@@ -126,51 +126,73 @@
                 $('#modal-form [name=stok]').val(response.stok);
             })
             .fail((errors) => {
-                alert('Tidak dapat menampilkan data');
+                Swal.fire('Error!', 'Unable to display data', 'error');
                 return;
             });
     }
 
     function deleteData(url) {
-        if (confirm('Apakah anda yakin menghapus data yang dipilih?')) {
-            $.post(url, {
+        Swal.fire({
+            title: 'Apa anda yakin?',
+            text: 'Anda tidak bisa membatalkan lagi setelah konfirmasi!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Hapus'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.post(url, {
                     '_token': $('[name=csrf-token]').attr('content'),
                     '_method': 'delete'
                 })
                 .done((response) => {
                     table.ajax.reload();
+                    Swal.fire('Deleted!', 'Data anda berhasil dihapus.', 'success');
                 })
                 .fail((errors) => {
-                    alert('Tidak dapat menghapus data');
+                    Swal.fire('Error!', 'Unable to delete data', 'error');
                     return;
                 });
-        }
+            }
+        });
     }
 
     function deleteSelected(url) {
         if ($('input:checked').length > 1) {
-            if (confirm('Yakin ingin menghapus data terpilih?')) {
-                $.post(url, $('.form-produk').serialize())
-                    .done((response) => {
-                        table.ajax.reload();
-                    })
-                    .fail((errors) => {
-                        alert('Tidak dapat menghapus data');
-                        return;
-                    });
-            }
+            Swal.fire({
+                title: 'Apa anda yakin?',
+                text: 'Anda tidak bisa membatalkan lagi setelah konfirmasi!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Hapus'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.post(url, $('.form-produk').serialize())
+                        .done((response) => {
+                            table.ajax.reload();
+                            Swal.fire('Deleted!', 'Data berhasil dihapus.', 'success');
+                        })
+                        .fail((errors) => {
+                            Swal.fire('Error!', 'Unable to delete data', 'error');
+                            return;
+                        });
+                }
+            });
         } else {
-            alert('Pilih data untuk dihapus');
+            Swal.fire('Warning!', 'Pilih data untuk menghapus', 'warning');
             return;
         }
     }
 
     function cetakBarcode(url) {
         if ($('input:checked').length < 1) {
-            alert('Pilih data untuk print');
+            Swal.fire('Warning!', 'Pilih data untuk print', 'warning');
             return;
         } else if ($('input:checked').length < 3) {
-            alert('Pilih setidaknya 3 data untuk diprint');
+            Swal.fire('Warning!', 'Pilih setidaknya 3 data untuk print', 'warning');
             return;
         } else {
             $('.form-produk')

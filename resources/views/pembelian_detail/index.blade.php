@@ -238,19 +238,30 @@ Pembelian
     }
 
     function deleteData(url) {
-        if (confirm('Are you sure you want to delete selected data?')) {
-            $.post(url, {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Anda tidak bisa membatalkan lagi setelah konfirmasi!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Hapus'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.post(url, {
                     '_token': $('[name=csrf-token]').attr('content'),
                     '_method': 'delete'
                 })
                 .done((response) => {
                     table.ajax.reload(() => loadForm($('#diskon').val()));
+                    Swal.fire('Deleted!', 'Data telah dihapus.', 'success');
                 })
                 .fail((errors) => {
-                    alert('Tidak dapat menghapus data');
+                    Swal.fire('Error!', 'Tidak dapat menghapus data', 'error');
                     return;
                 });
-        }
+            }
+        });
     }
 
     function loadForm(diskon = 0) {

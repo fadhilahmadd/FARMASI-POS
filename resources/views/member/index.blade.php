@@ -72,9 +72,10 @@ List Members
                     .done((response) => {
                         $('#modal-form').modal('hide');
                         table.ajax.reload();
+                        Swal.fire('Success!', 'Data saved successfully', 'success');
                     })
                     .fail((errors) => {
-                        alert('Tidak dapat menyimpan data');
+                        Swal.fire('Error!', 'Unable to save data', 'error');
                         return;
                     });
             }
@@ -111,7 +112,7 @@ List Members
                 $('#modal-form [name=alamat]').val(response.alamat);
             })
             .fail((errors) => {
-                alert('Tidak dapat menampilkan data');
+                Swal.fire('Error!', 'Unable to display data', 'error');
                 return;
             });
     }
@@ -124,9 +125,10 @@ List Members
                 })
                 .done((response) => {
                     table.ajax.reload();
+                    Swal.fire('Success!', 'Data deleted successfully', 'success');
                 })
                 .fail((errors) => {
-                    alert('Tidak dapat menghapus data');
+                    Swal.fire('Error!', 'Unable to delete data', 'error');
                     return;
                 });
         }
@@ -134,7 +136,7 @@ List Members
 
     function cetakMember(url) {
         if ($('input:checked').length < 1) {
-            alert('Pilih data untuk print');
+            Swal.fire('Warning!', 'Pilih data untuk print', 'warning');
             return;
         } else {
             $('.form-member')

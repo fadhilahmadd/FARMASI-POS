@@ -57,7 +57,7 @@
             </li>
             <li>
                 <a href="{{ route('penjualan.index') }}">
-                    <i class="fa fa-dollar"></i> <span>Daftar Sales</span>
+                    <i class="fa fa-dollar"></i> <span>Daftar Penjualan</span>
                 </a>
             </li>
             <li>

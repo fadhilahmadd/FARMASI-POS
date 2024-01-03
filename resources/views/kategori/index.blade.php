@@ -29,7 +29,6 @@
     </div>
 </div>
 
-
 @includeIf('kategori.form')
 @endsection
 
@@ -59,9 +58,10 @@
                     .done((response) => {
                         $('#modal-form').modal('hide');
                         table.ajax.reload();
+                        Swal.fire('Success!', 'Data saved successfully', 'success');
                     })
                     .fail((errors) => {
-                        alert('Tidak dapat menyimpan data');
+                        Swal.fire('Error!', 'Unable to save data', 'error');
                         return;
                     });
             }
@@ -70,7 +70,7 @@
 
     function addForm(url) {
         $('#modal-form').modal('show');
-        $('#modal-form .modal-title').text('Add Categort');
+        $('#modal-form .modal-title').text('Add Category');
 
         $('#modal-form form')[0].reset();
         $('#modal-form form').attr('action', url);
@@ -92,25 +92,36 @@
                 $('#modal-form [name=nama_kategori]').val(response.nama_kategori);
             })
             .fail((errors) => {
-                alert('Unable to display data');
+                Swal.fire('Error!', 'Unable to display data', 'error');
                 return;
             });
     }
 
     function deleteData(url) {
-        if (confirm('Are you sure you want to delete selected data?')) {
-            $.post(url, {
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            text: 'Anda tidak bisa membatalkan lagi setelah konfirmasi!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Hapus'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.post(url, {
                     '_token': $('[name=csrf-token]').attr('content'),
                     '_method': 'delete'
                 })
                 .done((response) => {
                     table.ajax.reload();
+                    Swal.fire('Deleted!', 'Data anda berhasil dihapus.', 'success');
                 })
                 .fail((errors) => {
-                    alert('Cannot delete data');
+                    Swal.fire('Error!', 'Tidak dapat menghapus data', 'error');
                     return;
                 });
-        }
+            }
+        });
     }
 </script>
 @endpush
